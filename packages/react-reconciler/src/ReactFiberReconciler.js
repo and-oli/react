@@ -405,7 +405,7 @@ function updateContainerImpl(
     onScheduleRoot(container, element);
   }
 
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markRenderScheduled(lane);
   }
 

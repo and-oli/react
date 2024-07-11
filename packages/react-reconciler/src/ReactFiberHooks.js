@@ -3529,7 +3529,7 @@ function markUpdateInDevTools<A>(fiber: Fiber, lane: Lane, action: A): void {
     }
   }
 
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markStateUpdateScheduled(fiber, lane);
   }
 }

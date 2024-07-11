@@ -428,7 +428,7 @@ function updateForwardRef(
   let nextChildren;
   let hasId;
   prepareToReadContext(workInProgress, renderLanes);
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markComponentRenderStarted(workInProgress);
   }
   if (__DEV__) {
@@ -455,7 +455,7 @@ function updateForwardRef(
     );
     hasId = checkDidRenderIdHook();
   }
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markComponentRenderStopped();
   }
 
@@ -1146,7 +1146,7 @@ function updateFunctionComponent(
   let nextChildren;
   let hasId;
   prepareToReadContext(workInProgress, renderLanes);
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markComponentRenderStarted(workInProgress);
   }
   if (__DEV__) {
@@ -1173,7 +1173,7 @@ function updateFunctionComponent(
     );
     hasId = checkDidRenderIdHook();
   }
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markComponentRenderStopped();
   }
 
@@ -1205,7 +1205,7 @@ export function replayFunctionComponent(
   // updateFunctionComponent that reuses the hooks from the previous attempt.
 
   prepareToReadContext(workInProgress, renderLanes);
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markComponentRenderStarted(workInProgress);
   }
   const nextChildren = replaySuspendedComponentWithHooks(
@@ -1216,7 +1216,7 @@ export function replayFunctionComponent(
     secondArg,
   );
   const hasId = checkDidRenderIdHook();
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markComponentRenderStopped();
   }
 
@@ -1391,7 +1391,7 @@ function finishClassComponent(
       stopProfilerTimerIfRunning(workInProgress);
     }
   } else {
-    if (enableSchedulingProfiler) {
+    if (true /* always call profiling hooks */) {
       markComponentRenderStarted(workInProgress);
     }
     if (__DEV__) {
@@ -1412,7 +1412,7 @@ function finishClassComponent(
     } else {
       nextChildren = instance.render();
     }
-    if (enableSchedulingProfiler) {
+    if (true /* always call profiling hooks */) {
       markComponentRenderStopped();
     }
   }
@@ -3414,7 +3414,7 @@ function updateContextConsumer(
 
   prepareToReadContext(workInProgress, renderLanes);
   const newValue = readContext(context);
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markComponentRenderStarted(workInProgress);
   }
   let newChildren;
@@ -3426,7 +3426,7 @@ function updateContextConsumer(
   } else {
     newChildren = render(newValue);
   }
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markComponentRenderStopped();
   }
 

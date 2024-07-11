@@ -99,7 +99,7 @@ export const UpdateLanes: Lanes =
 // This function is used for the experimental timeline (react-devtools-timeline)
 // It should be kept in sync with the Lanes values above.
 export function getLabelForLane(lane: Lane): string | void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (lane & SyncHydrationLane) {
       return 'SyncHydrationLane';
     }

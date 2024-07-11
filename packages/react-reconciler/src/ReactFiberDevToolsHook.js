@@ -75,7 +75,7 @@ export function injectInternals(internals: Object): boolean {
     return true;
   }
   try {
-    if (enableSchedulingProfiler) {
+    if (true /* always call profiling hooks */) {
       // Conditionally inject these hooks only if Timeline profiler is supported by this build.
       // This gives DevTools a way to feature detect that isn't tied to version number
       // (since profiling and timeline are controlled by different feature flags).
@@ -240,7 +240,7 @@ function injectProfilingHooks(profilingHooks: DevToolsProfilingHooks): void {
 }
 
 function getLaneLabelMap(): Map<Lane, string> | null {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     const map: Map<Lane, string> = new Map();
 
     let lane = 1;
@@ -257,7 +257,7 @@ function getLaneLabelMap(): Map<Lane, string> | null {
 }
 
 export function markCommitStarted(lanes: Lanes): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markCommitStarted === 'function'
@@ -268,7 +268,7 @@ export function markCommitStarted(lanes: Lanes): void {
 }
 
 export function markCommitStopped(): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markCommitStopped === 'function'
@@ -279,7 +279,7 @@ export function markCommitStopped(): void {
 }
 
 export function markComponentRenderStarted(fiber: Fiber): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markComponentRenderStarted === 'function'
@@ -290,7 +290,7 @@ export function markComponentRenderStarted(fiber: Fiber): void {
 }
 
 export function markComponentRenderStopped(): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markComponentRenderStopped === 'function'
@@ -301,7 +301,7 @@ export function markComponentRenderStopped(): void {
 }
 
 export function markComponentPassiveEffectMountStarted(fiber: Fiber): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markComponentPassiveEffectMountStarted ===
@@ -313,7 +313,7 @@ export function markComponentPassiveEffectMountStarted(fiber: Fiber): void {
 }
 
 export function markComponentPassiveEffectMountStopped(): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markComponentPassiveEffectMountStopped ===
@@ -325,7 +325,7 @@ export function markComponentPassiveEffectMountStopped(): void {
 }
 
 export function markComponentPassiveEffectUnmountStarted(fiber: Fiber): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markComponentPassiveEffectUnmountStarted ===
@@ -337,7 +337,7 @@ export function markComponentPassiveEffectUnmountStarted(fiber: Fiber): void {
 }
 
 export function markComponentPassiveEffectUnmountStopped(): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markComponentPassiveEffectUnmountStopped ===
@@ -349,7 +349,7 @@ export function markComponentPassiveEffectUnmountStopped(): void {
 }
 
 export function markComponentLayoutEffectMountStarted(fiber: Fiber): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markComponentLayoutEffectMountStarted ===
@@ -361,7 +361,7 @@ export function markComponentLayoutEffectMountStarted(fiber: Fiber): void {
 }
 
 export function markComponentLayoutEffectMountStopped(): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markComponentLayoutEffectMountStopped ===
@@ -373,7 +373,7 @@ export function markComponentLayoutEffectMountStopped(): void {
 }
 
 export function markComponentLayoutEffectUnmountStarted(fiber: Fiber): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markComponentLayoutEffectUnmountStarted ===
@@ -385,7 +385,7 @@ export function markComponentLayoutEffectUnmountStarted(fiber: Fiber): void {
 }
 
 export function markComponentLayoutEffectUnmountStopped(): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markComponentLayoutEffectUnmountStopped ===
@@ -401,7 +401,7 @@ export function markComponentErrored(
   thrownValue: mixed,
   lanes: Lanes,
 ): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markComponentErrored === 'function'
@@ -416,7 +416,7 @@ export function markComponentSuspended(
   wakeable: Wakeable,
   lanes: Lanes,
 ): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markComponentSuspended === 'function'
@@ -427,7 +427,7 @@ export function markComponentSuspended(
 }
 
 export function markLayoutEffectsStarted(lanes: Lanes): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markLayoutEffectsStarted === 'function'
@@ -438,7 +438,7 @@ export function markLayoutEffectsStarted(lanes: Lanes): void {
 }
 
 export function markLayoutEffectsStopped(): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markLayoutEffectsStopped === 'function'
@@ -449,7 +449,7 @@ export function markLayoutEffectsStopped(): void {
 }
 
 export function markPassiveEffectsStarted(lanes: Lanes): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markPassiveEffectsStarted === 'function'
@@ -460,7 +460,7 @@ export function markPassiveEffectsStarted(lanes: Lanes): void {
 }
 
 export function markPassiveEffectsStopped(): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markPassiveEffectsStopped === 'function'
@@ -471,7 +471,7 @@ export function markPassiveEffectsStopped(): void {
 }
 
 export function markRenderStarted(lanes: Lanes): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markRenderStarted === 'function'
@@ -482,7 +482,7 @@ export function markRenderStarted(lanes: Lanes): void {
 }
 
 export function markRenderYielded(): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markRenderYielded === 'function'
@@ -493,7 +493,7 @@ export function markRenderYielded(): void {
 }
 
 export function markRenderStopped(): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markRenderStopped === 'function'
@@ -504,7 +504,7 @@ export function markRenderStopped(): void {
 }
 
 export function markRenderScheduled(lane: Lane): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markRenderScheduled === 'function'
@@ -515,7 +515,7 @@ export function markRenderScheduled(lane: Lane): void {
 }
 
 export function markForceUpdateScheduled(fiber: Fiber, lane: Lane): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markForceUpdateScheduled === 'function'
@@ -526,7 +526,7 @@ export function markForceUpdateScheduled(fiber: Fiber, lane: Lane): void {
 }
 
 export function markStateUpdateScheduled(fiber: Fiber, lane: Lane): void {
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     if (
       injectedProfilingHooks !== null &&
       typeof injectedProfilingHooks.markStateUpdateScheduled === 'function'

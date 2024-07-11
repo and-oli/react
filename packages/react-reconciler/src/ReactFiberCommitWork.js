@@ -584,7 +584,7 @@ function commitHookEffectListUnmount(
         const destroy = inst.destroy;
         if (destroy !== undefined) {
           inst.destroy = undefined;
-          if (enableSchedulingProfiler) {
+          if (true /* always call profiling hooks */) {
             if ((flags & HookPassive) !== NoHookEffect) {
               markComponentPassiveEffectUnmountStarted(finishedWork);
             } else if ((flags & HookLayout) !== NoHookEffect) {
@@ -604,7 +604,7 @@ function commitHookEffectListUnmount(
             }
           }
 
-          if (enableSchedulingProfiler) {
+          if (true /* always call profiling hooks */) {
             if ((flags & HookPassive) !== NoHookEffect) {
               markComponentPassiveEffectUnmountStopped();
             } else if ((flags & HookLayout) !== NoHookEffect) {
@@ -627,7 +627,7 @@ function commitHookEffectListMount(flags: HookFlags, finishedWork: Fiber) {
     let effect = firstEffect;
     do {
       if ((effect.tag & flags) === flags) {
-        if (enableSchedulingProfiler) {
+        if (true /* always call profiling hooks */) {
           if ((flags & HookPassive) !== NoHookEffect) {
             markComponentPassiveEffectMountStarted(finishedWork);
           } else if ((flags & HookLayout) !== NoHookEffect) {
@@ -651,7 +651,7 @@ function commitHookEffectListMount(flags: HookFlags, finishedWork: Fiber) {
           }
         }
 
-        if (enableSchedulingProfiler) {
+        if (true /* always call profiling hooks */) {
           if ((flags & HookPassive) !== NoHookEffect) {
             markComponentPassiveEffectMountStopped();
           } else if ((flags & HookLayout) !== NoHookEffect) {
@@ -2191,7 +2191,7 @@ function commitDeletionEffectsOnFiber(
                     destroy,
                   );
                 } else if ((tag & HookLayout) !== NoHookEffect) {
-                  if (enableSchedulingProfiler) {
+                  if (true /* always call profiling hooks */) {
                     markComponentLayoutEffectUnmountStarted(deletedFiber);
                   }
 
@@ -2213,7 +2213,7 @@ function commitDeletionEffectsOnFiber(
                     );
                   }
 
-                  if (enableSchedulingProfiler) {
+                  if (true /* always call profiling hooks */) {
                     markComponentLayoutEffectUnmountStopped();
                   }
                 }
