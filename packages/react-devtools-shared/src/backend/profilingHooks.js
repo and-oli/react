@@ -123,7 +123,6 @@ export function createProfilingHooks({
   let currentBatchUID: BatchUID = 0;
   let currentReactComponentMeasure: ReactComponentMeasure | null = null;
   let currentReactMeasuresStack: Array<ReactMeasure> = [];
-  const currentBeginMarksStack: Array<string> = [];
   let currentTimelineData: TimelineData | null = null;
   let currentFiberStacks: Map<SchedulingEvent, Array<Fiber>> = new Map();
   let isProfiling: boolean = false;
@@ -215,59 +214,6 @@ export function createProfilingHooks({
     ((performanceTarget: any): Performance).clearMarks(markName);
   }
 
-  function beginMark(taskName: string, ending: string | number) {
-    // This name format is used in preprocessData.js so it cannot just be changed.
-    const startMarkName = `--${taskName}-start-${ending}`;
-    currentBeginMarksStack.push(startMarkName);
-    // This method won't be called unless these functions are defined, so we can skip the extra typeof check.
-    ((performanceTarget: any): Performance).mark(startMarkName);
-  }
-
-  function endMarkAndClear(taskName: string) {
-    const startMarkName = currentBeginMarksStack.pop();
-    if (!startMarkName) {
-      console.error(
-        'endMarkAndClear was unexpectedly called without a corresponding start mark',
-      );
-      return;
-    }
-    const markEnding = startMarkName.split('-').at(-1) || '';
-    const endMarkName = `--${taskName}-stop`;
-    const measureName = `${taskName} ${markEnding}`;
-
-    // Use different color for rendering tasks.
-    const color = taskName.includes('render') ? 'primary' : 'tertiary';
-    // If the ending is not a number, then it's a component name.
-    const detailsPairs = isNaN(parseInt(markEnding, 10))
-      ? [['Component', markEnding]]
-      : [];
-    // This method won't be called unless these functions are defined, so we can skip the extra typeof check.
-    ((performanceTarget: any): Performance).mark(endMarkName);
-    // Based on the format in https://bit.ly/rpp-e11y
-    const measureOptions = {
-      start: startMarkName,
-      end: endMarkName,
-      detail: {
-        devtools: {
-          metadata: {
-            dataType: 'track-entry',
-            extensionName: 'React',
-          },
-          color,
-          track: '⚛️ React',
-          detailsPairs,
-        },
-      },
-    };
-    ((performanceTarget: any): Performance).measure(
-      measureName,
-      measureOptions,
-    );
-    ((performanceTarget: any): Performance).clearMarks(startMarkName);
-    ((performanceTarget: any): Performance).clearMarks(endMarkName);
-    ((performanceTarget: any): Performance).clearMeasures(measureName);
-  }
-
   function recordReactMeasureStarted(
     type: ReactMeasureType,
     lanes: Lanes,
@@ -355,7 +301,7 @@ export function createProfilingHooks({
     }
 
     if (supportsUserTimingV3) {
-      beginMark('commit', lanes);
+      markAndClear(`--commit-start-${lanes}`);
 
       // Some metadata only needs to be logged once per session,
       // but if profiling information is being recorded via the Performance tab,
@@ -372,7 +318,7 @@ export function createProfilingHooks({
     }
 
     if (supportsUserTimingV3) {
-      endMarkAndClear('commit');
+      markAndClear('--commit-stop');
     }
   }
 
@@ -394,7 +340,7 @@ export function createProfilingHooks({
       }
 
       if (supportsUserTimingV3) {
-        beginMark('component-render', componentName);
+        markAndClear(`--component-render-start-${componentName}`);
       }
     }
   }
@@ -415,8 +361,9 @@ export function createProfilingHooks({
         currentReactComponentMeasure = null;
       }
     }
+
     if (supportsUserTimingV3) {
-      endMarkAndClear('component-render');
+      markAndClear('--component-render-stop');
     }
   }
 
@@ -438,7 +385,7 @@ export function createProfilingHooks({
       }
 
       if (supportsUserTimingV3) {
-        beginMark('component-layout-effect-mount', componentName);
+        markAndClear(`--component-layout-effect-mount-start-${componentName}`);
       }
     }
   }
@@ -461,7 +408,7 @@ export function createProfilingHooks({
     }
 
     if (supportsUserTimingV3) {
-      endMarkAndClear('component-layout-effect-mount');
+      markAndClear('--component-layout-effect-mount-stop');
     }
   }
 
@@ -483,7 +430,9 @@ export function createProfilingHooks({
       }
 
       if (supportsUserTimingV3) {
-        beginMark('component-layout-effect-unmount', componentName);
+        markAndClear(
+          `--component-layout-effect-unmount-start-${componentName}`,
+        );
       }
     }
   }
@@ -506,7 +455,7 @@ export function createProfilingHooks({
     }
 
     if (supportsUserTimingV3) {
-      endMarkAndClear('component-layout-effect-unmount');
+      markAndClear('--component-layout-effect-unmount-stop');
     }
   }
 
@@ -528,7 +477,7 @@ export function createProfilingHooks({
       }
 
       if (supportsUserTimingV3) {
-        beginMark('component-passive-effect-mount', componentName);
+        markAndClear(`--component-passive-effect-mount-start-${componentName}`);
       }
     }
   }
@@ -551,7 +500,7 @@ export function createProfilingHooks({
     }
 
     if (supportsUserTimingV3) {
-      endMarkAndClear('component-passive-effect-mount');
+      markAndClear('--component-passive-effect-mount-stop');
     }
   }
 
@@ -573,7 +522,9 @@ export function createProfilingHooks({
       }
 
       if (supportsUserTimingV3) {
-        beginMark('component-passive-effect-unmount', componentName);
+        markAndClear(
+          `--component-passive-effect-unmount-start-${componentName}`,
+        );
       }
     }
   }
@@ -596,7 +547,7 @@ export function createProfilingHooks({
     }
 
     if (supportsUserTimingV3) {
-      endMarkAndClear('component-passive-effect-unmount');
+      markAndClear('--component-passive-effect-unmount-stop');
     }
   }
 
@@ -728,7 +679,7 @@ export function createProfilingHooks({
     }
 
     if (supportsUserTimingV3) {
-      beginMark('layout-effects', lanes);
+      markAndClear(`--layout-effects-start-${lanes}`);
     }
   }
 
@@ -738,7 +689,7 @@ export function createProfilingHooks({
     }
 
     if (supportsUserTimingV3) {
-      endMarkAndClear('layout-effects');
+      markAndClear('--layout-effects-stop');
     }
   }
 
@@ -748,7 +699,7 @@ export function createProfilingHooks({
     }
 
     if (supportsUserTimingV3) {
-      beginMark('passive-effects', lanes);
+      markAndClear(`--passive-effects-start-${lanes}`);
     }
   }
 
@@ -758,7 +709,7 @@ export function createProfilingHooks({
     }
 
     if (supportsUserTimingV3) {
-      endMarkAndClear('passive-effects');
+      markAndClear('--passive-effects-stop');
     }
   }
 
@@ -783,7 +734,7 @@ export function createProfilingHooks({
     }
 
     if (supportsUserTimingV3) {
-      beginMark('render', lanes);
+      markAndClear(`--render-start-${lanes}`);
     }
   }
 
@@ -803,7 +754,7 @@ export function createProfilingHooks({
     }
 
     if (supportsUserTimingV3) {
-      endMarkAndClear('render');
+      markAndClear('--render-stop');
     }
   }
 

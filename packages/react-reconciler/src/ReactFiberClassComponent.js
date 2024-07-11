@@ -223,7 +223,7 @@ const classComponentUpdater = {
       }
     }
 
-    if (enableSchedulingProfiler) {
+    if (true /* always call profiling hooks */) {
       markStateUpdateScheduled(fiber, lane);
     }
   },
@@ -257,7 +257,7 @@ const classComponentUpdater = {
       }
     }
 
-    if (enableSchedulingProfiler) {
+    if (true /* always call profiling hooks */) {
       markStateUpdateScheduled(fiber, lane);
     }
   },
@@ -291,7 +291,7 @@ const classComponentUpdater = {
       }
     }
 
-    if (enableSchedulingProfiler) {
+    if (true /* always call profiling hooks */) {
       markForceUpdateScheduled(fiber, lane);
     }
   },

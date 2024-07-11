@@ -1760,7 +1760,7 @@ function handleThrow(root: FiberRoot, thrownValue: any): void {
     stopProfilerTimerIfRunningAndRecordDelta(erroredWork, true);
   }
 
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markComponentRenderStopped();
     switch (workInProgressSuspendedReason) {
       case SuspendedOnError: {
@@ -1995,7 +1995,7 @@ function renderRootSync(root: FiberRoot, lanes: Lanes) {
     }
   }
 
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markRenderStarted(lanes);
   }
 
@@ -2078,7 +2078,7 @@ function renderRootSync(root: FiberRoot, lanes: Lanes) {
     }
   }
 
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markRenderStopped();
   }
 
@@ -2137,7 +2137,7 @@ function renderRootConcurrent(root: FiberRoot, lanes: Lanes) {
     }
   }
 
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markRenderStarted(lanes);
   }
 
@@ -2330,13 +2330,13 @@ function renderRootConcurrent(root: FiberRoot, lanes: Lanes) {
   // Check if the tree has completed.
   if (workInProgress !== null) {
     // Still work remaining.
-    if (enableSchedulingProfiler) {
+    if (true /* always call profiling hooks */) {
       markRenderYielded();
     }
     return RootInProgress;
   } else {
     // Completed the tree.
-    if (enableSchedulingProfiler) {
+    if (true /* always call profiling hooks */) {
       markRenderStopped();
     }
 
@@ -2774,7 +2774,7 @@ function commitRootImpl(
     }
   }
 
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markCommitStarted(lanes);
   }
 
@@ -2785,7 +2785,7 @@ function commitRootImpl(
       }
     }
 
-    if (enableSchedulingProfiler) {
+    if (true /* always call profiling hooks */) {
       markCommitStopped();
     }
 
@@ -2940,7 +2940,7 @@ function commitRootImpl(
         logLayoutEffectsStarted(lanes);
       }
     }
-    if (enableSchedulingProfiler) {
+    if (true /* always call profiling hooks */) {
       markLayoutEffectsStarted(lanes);
     }
     commitLayoutEffects(finishedWork, root, lanes);
@@ -2950,7 +2950,7 @@ function commitRootImpl(
       }
     }
 
-    if (enableSchedulingProfiler) {
+    if (true /* always call profiling hooks */) {
       markLayoutEffectsStopped();
     }
 
@@ -3102,7 +3102,7 @@ function commitRootImpl(
     }
   }
 
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markCommitStopped();
   }
 
@@ -3255,7 +3255,7 @@ function flushPassiveEffectsImpl() {
     }
   }
 
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markPassiveEffectsStarted(lanes);
   }
 
@@ -3281,7 +3281,7 @@ function flushPassiveEffectsImpl() {
     }
   }
 
-  if (enableSchedulingProfiler) {
+  if (true /* always call profiling hooks */) {
     markPassiveEffectsStopped();
   }
 
